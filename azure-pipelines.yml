@@ -51,7 +51,7 @@ steps:
   displayName: 'Connectivity Check'
   
 - script: |
-    syft -o json . | anchorectl source add --wait ${GITHUB_SERVER_URL}/${REPOSITORY}@$(Build.SourceVersion) --application ${APPLICATION}@${VERSION} --from -
+    syft -o json / | anchorectl source add --wait ${GITHUB_SERVER_URL}/${REPOSITORY}@$(Build.SourceVersion) --application ${APPLICATION}@${VERSION} --from -
   displayName: 'Generate and Push SBOM'
 
 - script: |
