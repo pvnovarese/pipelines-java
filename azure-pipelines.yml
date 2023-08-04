@@ -53,10 +53,9 @@ steps:
   displayName: 'Connectivity Check'
 
 - script: |
-    syft -o json . | anchorectl source add --wait ${GITHUB_SERVER_URL}/${REPOSITORY}@$(Build.SourceVersion) --application ${APPLICATION}@${VERSION} --from -
+    syft -o json . | anchorectl source add --wait ${GITHUB_SERVER_URL}/${REPOSITORY}@${sourceVersion:0:7} --application ${APPLICATION}@${VERSION} --from -
     syft -o json . | grype
-  displayName: 'Generate and Push SBOM'
-
-- script: |
     anchorectl source vulnerabilities ${GITHUB_SERVER_URL}/${REPOSITORY}@${sourceVersion:0:7}
-  displayName: 'Pull Vulnerabilities'
+  env: { sourceVersion: $(Build.SourceVersion) }
+  displayName: 'Generate SBOM and Pull Vulns'
+
